@@ -90,13 +90,35 @@ resource "aws_eks_node_group" "example" {
     max_size     = 2
     min_size     = 1
   }
-  instance_types = ["t2.medium"]
+  instance_types = ["t2.large"]
 
-  # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
-  # Otherwise, EKS will not be able to properly delete EC2 Instances and Elastic Network Interfaces.
   depends_on = [
     aws_iam_role_policy_attachment.example-AmazonEKSWorkerNodePolicy,
     aws_iam_role_policy_attachment.example-AmazonEKS_CNI_Policy,
     aws_iam_role_policy_attachment.example-AmazonEC2ContainerRegistryReadOnly,
   ]
+}
+# Get availability zones (ensure 2+ zones are available)
+data "aws_availability_zones" "available" {}
+
+# Ensure subnets are in supported zones for control plane
+resource "aws_subnet" "subnet_a" {
+  vpc_id                  = data.aws_vpc.default.id
+  cidr_block              = "10.0.1.0/24"
+  availability_zone       = data.aws_availability_zones.available.names[0] # us-east-1a
+  map_public_ip_on_launch = true
+}
+
+resource "aws_subnet" "subnet_b" {
+  vpc_id                  = data.aws_vpc.default.id
+  cidr_block              = "10.0.2.0/24"
+  availability_zone       = data.aws_availability_zones.available.names[1] # us-east-1b
+  map_public_ip_on_launch = true
+}
+
+resource "aws_subnet" "subnet_c" {
+  vpc_id                  = data.aws_vpc.default.id
+  cidr_block              = "10.0.3.0/24"
+  availability_zone       = data.aws_availability_zones.available.names[2] # us-east-1c
+  map_public_ip_on_launch = true
 }

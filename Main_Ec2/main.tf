@@ -2,7 +2,7 @@ resource "aws_instance" "web" {
   ami                    = "ami-0453ec754f44f9a4a"      #change ami id for different region
   instance_type          = "t2.large"
   key_name               = "first"              #change key name as per your setup
-  vpc_security_group_ids = [aws_security_group.devops-project-veera.id]
+  vpc_security_group_ids = [aws_security_group.devops-project-akash.id]
   user_data              = templatefile("./install.sh", {})
 
   tags = {

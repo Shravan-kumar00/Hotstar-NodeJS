@@ -56,8 +56,10 @@ sudo systemctl start artifactory.service
 
 #-------------------terraform install--------------------------
 
-sudo wget https://releases.hashicorp.com/terraform/1.7.2/terraform_1.7.2_linux_amd64.zip
-sudo unzip terraform_1.7.2_linux_amd64.zip
+sudo yum install -y yum-utils
+sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
+sudo yum install terraform
+
 sudo mv terraform /usr/local/bin
 
 

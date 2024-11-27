@@ -62,7 +62,6 @@ sudo yum install terraform
 
 
 
-
 #------------------Docker install-------------
 #sudo amazon-linux-extras install docker #linux 2022
 sudo yum install docker -y #linux 2023

@@ -73,3 +73,5 @@ sudo service docker start
 #------------------sonar install by using docker---------------
 docker run -d --name sonar -p 9000:9000 sonarqube:lts-community
 #docker run -d --name tomcat -p 8089:8080 tomcat:lts-community
+
+sudo yum update -y
